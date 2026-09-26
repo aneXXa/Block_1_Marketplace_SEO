@@ -1,0 +1,57 @@
+[project]
+name = "marketplace-poster"
+version = "0.1.0"
+description = "Telegram-бот: SEO-пакет (заголовок, описание, теги) для Wildberries, Ozon и Авито"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [{ name = "Nexxa" }]
+dependencies = [
+    "aiogram>=3.17.0",
+    "httpx>=0.28.0",
+    "huggingface_hub>=0.30.0",
+    "openai>=1.80.0",
+    "pydantic-settings>=2.10.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.25.0",
+    "ruff>=0.9.0",
+]
+
+[project.scripts]
+marketplace-poster = "marketplace_poster.main:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "pytest>=8.3.0",
+    "pytest-asyncio>=0.25.0",
+    "ruff>=0.9.0",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = ["-m", "not integration"]
+markers = [
+    "integration: calls a live LLM; skipped unless LLM_API_KEY is set",
+]
