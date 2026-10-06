@@ -1,0 +1,9 @@
+services:
+  bot:
+    build: .
+    image: seo-seller:latest
+    container_name: seo-seller-bot
+    env_file:
+      - .env
+    restart: unless-stopped
+    # Long polling: наружный порт не нужен, нужен исходящий интернет к Telegram и LLM.
